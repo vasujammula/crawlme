@@ -3,6 +3,7 @@ import urllib
 import lxml.html
 import httplib2
 import time
+from selenium import webdriver
 
 class crawl_web:
 	
@@ -49,7 +50,16 @@ class crawl_web:
 				#print "SKIPPED"
 				continue
 		return	self.urls
-
+	def open_link(self,url):
+		driver = webdriver.Firefox(capabilities={"marionette":False})
+		driver.implicitly_wait(10)
+		driver.maximize_window()
+		driver.implicitly_wait(10)
+		driver.maximize_window()
+		# navigate to the application home page
+		driver.get("http://www.google.com")
+		driver.implicitly_wait(10)
+		driver.quit()
 if __name__=="__main__":
 	ob=crawl_web()
 	url_full=[]
@@ -57,5 +67,4 @@ if __name__=="__main__":
 	ob.get_links(url)
 	for url in ob.urls:
 		print url
-			
-		
+		ob.open_link(url)	
