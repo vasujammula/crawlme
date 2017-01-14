@@ -1,0 +1,19 @@
+
+IN LINUX PLATFORM
+########################################################################################
+pip install lxml 
+pip install 
+
+IN WINDOWS PLATFORM
+########################################################################################
+http://www.microsoft.com/en-us/download/confirmation.aspx?id=44266
+
+https://www.zlatkovic.com/libxml.en.html
+
+CHANGES REQUIRED FOR FIREFOX
+########################################################################################
+about:config
+
+browser.sessionstore.resume_from_crash=false(to disable to prompt for restore)
+toolkit.startup.max_resumed_crashes=-1 (To disable start in safe mode )
+
