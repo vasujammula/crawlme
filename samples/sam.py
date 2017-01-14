@@ -3,14 +3,14 @@ import urllib
 import lxml.html
 import httplib2
 import time
-from selenium import webdriver
-
+import subprocess
 class crawl_web:
 	
 	def __init__(self,urls=[],filename="urls.txt"):
 		self.urls=urls	
 		self.t_urls=[]
-		self.fh=open(filename,"r+")
+		self.fh=open(filename,"w+")
+		self.close_after=20
 		
 	def get_links(self,url):
 		connection = urllib.urlopen(url)
@@ -50,16 +50,20 @@ class crawl_web:
 				#print "SKIPPED"
 				continue
 		return	self.urls
-	def open_link(self,url):
-		driver = webdriver.Firefox(capabilities={"marionette":False})
-		driver.implicitly_wait(10)
-		driver.maximize_window()
-		driver.implicitly_wait(10)
-		driver.maximize_window()
-		# navigate to the application home page
-		driver.get("http://www.google.com")
-		driver.implicitly_wait(10)
-		driver.quit()
+	def open_link(self,url,browser="firefox"):
+		print "OPENING URL:",url
+		try:
+			try:
+				subprocess.Popen(["ps -ef | grep "+browser+" |grep defunct | grep -v grep | cut -b8-20 | xargs kill -9"])
+			except Exception as e1:
+				print "\nWhile Closing browser got exception plz ignore "
+			browser_in=subprocess.Popen([browser,url],stdout=None, stderr=None)
+			time.sleep(self.close_after)
+			browser_in.terminate()
+		except Exception as e2:
+			print "Exception while accessing url",url,e2.message
+		
+			
 if __name__=="__main__":
 	ob=crawl_web()
 	url_full=[]
@@ -67,4 +71,4 @@ if __name__=="__main__":
 	ob.get_links(url)
 	for url in ob.urls:
 		print url
-		ob.open_link(url)	
+		ob.open_link(url,"firefox")	
