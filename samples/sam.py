@@ -39,7 +39,9 @@ class crawl_web:
 					self.urls.append(mlink)
 			else:
 				continue
-		return	self.urls
+		for url in self.urls:
+                        ob.open_link(url,ob.browser)
+		#return	self.urls
 	def open_link(self,url,browser="firefox"):
                 if(self.platform=="win32" or self.platform=="linux2"):
                     self.lf.write("INFO:OPENING URL"+url+"\n")
@@ -64,6 +66,6 @@ if __name__=="__main__":
 	url_full=[]
 	url='http://www.msn.com'
 	ob.get_links(url)
-	for url in ob.urls:
-                ob.open_link(url,ob.browser)
-            
+	#for url in ob.urls:
+        #       ob.open_link(url,ob.browser)
+        ob.get_links    
