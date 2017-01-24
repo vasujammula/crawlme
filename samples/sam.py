@@ -4,6 +4,7 @@ import lxml.html
 import time
 import subprocess
 import sys
+import thread
 class crawl_web:
 	
 	def __init__(self,urls=[],filename="urls.txt"):
@@ -40,7 +41,7 @@ class crawl_web:
 			else:
 				continue
 		for url in self.urls:
-                        ob.open_link(url,ob.browser)
+                        ob.open_link(url,self.browser)
 		#return	self.urls
 	def open_link(self,url,browser="firefox"):
                 if(self.platform=="win32" or self.platform=="linux2"):
@@ -64,8 +65,9 @@ class crawl_web:
 if __name__=="__main__":
 	ob=crawl_web()
 	url_full=[]
-	url='http://www.msn.com'
-	ob.get_links(url)
+	fh=open(filename,"w+")
+	for link in fh:
+	#url='http://www.msn.com'
+		thread.start_new_thread(ob.get_links,(url))
 	#for url in ob.urls:
         #       ob.open_link(url,ob.browser)
-        ob.get_links    
